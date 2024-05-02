@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter-like Interface</title>
+    <style>
+        /* Basic styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1da1f2; /* Blue background color */
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+        .tweet {
+            border-bottom: 1px solid #e1e8ed;
+            padding: 10px 0;
+        }
+        .tweet .user {
+            font-weight: bold;
+            color: #1da1f2;
+        }
+        .tweet .timestamp {
+            color: #657786;
+            margin-left: 10px;
+        }
+        .tweet .message {
+            margin-top: 5px;
+            color: #1c1e21;
+        }
+        .tweet .actions {
+            margin-top: 10px;
+        }
+        .tweet .actions button {
+            background-color: transparent;
+            border: none;
+            color: #1da1f2;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .tweet .actions button:hover {
+            text-decoration: underline;
+        }
+        textarea {
+            width: calc(100% - 20px); /* Adjusted width to consider padding */
+            height: 100px;
+            resize: none;
+            margin-bottom: 10px; /* Added margin to create space between textarea and button */
+        }
+        .post-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #f9f9f9; /* Background color for the comment box */
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        p {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #657786;
+        }
+        button {
+            background-color: #1da1f2;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <h1>Welcome to NBA Splitter</h1>
+    <p>Here you can talk anything about the NBA</p>
+
+    <!-- Tweet Input -->
+    <div id="tweetInput">
+        <textarea id="tweetContent" placeholder="What's happening?"></textarea>
+        <button id="postButton">Post</button>
+    </div>
+
+    <!-- Description Box -->
+    <div id="descriptionBox"></div>
+
+    <!-- Tweets Container -->
+    <div id="tweetsContainer"></div>
+    
+    <!-- Comment Box -->
+    <div class="post-box" id="commentBox"></div>
+</div>
+
+<script>
+    // Function to create and append a new tweet
+    function postTweet() {
+        var content = document.getElementById("tweetContent").value;
+        var container = document.getElementById("tweetsContainer");
+        var descriptionBox = document.getElementById("descriptionBox");
+
+        // Create a new tweet element
+        var newTweet = document.createElement("div");
+        newTweet.classList.add("tweet");
+
+        // Create user element
+        var user = document.createElement("div");
+        user.classList.add("user");
+        user.textContent = "John Doe"; // You can replace this with actual user name
+        newTweet.appendChild(user);
+
+        // Create timestamp element
+        var timestamp = document.createElement("div");
+        timestamp.classList.add("timestamp");
+        var now = new Date();
+        timestamp.textContent = now.toDateString(); // You can format the timestamp as needed
+        newTweet.appendChild(timestamp);
+
+        // Create message element
+        var message = document.createElement("div");
+        message.classList.add("message");
+        message.textContent = content;
+        newTweet.appendChild(message);
+
+        // Create actions element
+        var actions = document.createElement("div");
+        actions.classList.add("actions");
+        var likeButton = document.createElement("button");
+        likeButton.textContent = "Like";
+        var retweetButton = document.createElement("button");
+        retweetButton.textContent = "Retweet";
+        var replyButton = document.createElement("button");
+        replyButton.textContent = "Reply";
+        actions.appendChild(likeButton);
+        actions.appendChild(retweetButton);
+        actions.appendChild(replyButton);
+        newTweet.appendChild(actions);
+
+        // Add the new tweet to the container
+        container.appendChild(newTweet);
+
+        // Create a new text box for the tweet and put the content inside
+        var postBox = document.createElement("div");
+        postBox.classList.add("post-box");
+        postBox.textContent = content;
+        descriptionBox.appendChild(postBox);
+
+        // Clear the textarea after posting
+        document.getElementById("tweetContent").value = "";
+    }
+
+    // Attach the postTweet function to
